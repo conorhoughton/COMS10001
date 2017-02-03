@@ -9,7 +9,7 @@
 \documentclass[11pt,a4paper]{scrartcl}
 \typearea{12}
 \usepackage{graphicx}
-\usepackage{pstricks}
+%\usepackage{pstricks}
 \usepackage{listings}
 \usepackage{color}
 \lstset{language=C}
@@ -192,7 +192,6 @@ is really of interest is the power of the highest power of $n$ and
 detailed calculations like this won't be done again.
 
 \begin{table}
-\color{darkgray}
 So there is formula for summing all the numbers from one to $n$:
 \begin{equation}
 \sum_{i=1}^ni = \frac{n(n+1)}{2}
@@ -357,11 +356,11 @@ for large enough $n$, to check this divide both sides by $n$ so we need to show 
 \end{equation}
 Since 
 \begin{equation}
-5n+1+\frac{c}{n}>5n+1
+5n+1+\frac{6}{n}>5n+1
 \end{equation}
 then, if $n>c/5$
 \begin{equation}
-5n+1+\frac{c}{n}>5\frac{c}{5}+1=c+1>c
+5n+1+\frac{6}{n}>5\frac{c}{5}+1=c+1>c
 \end{equation}
 so, no matter what value of $c$ is chosen, making $n>5/n$ implies
 \begin{equation}
