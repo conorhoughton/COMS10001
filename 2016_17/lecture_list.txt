@@ -1,0 +1,8 @@
+
+1. lecture 1 (2017-01-27) introduction, discussion of insert sort,line-by-line estimate of run time. O(n^2) mentioned. Based on
+1_introduction.
+
+2. lecture 2 (2017-02-03) recap of insert sort, definition of O(g(n))
+with some examples. Discussion of log_2 n, of n! and 2^n. Searching an
+ordered list, discussion of big-Omega and big-Theta. Based on
+1_introduction and 2_big_oh.
