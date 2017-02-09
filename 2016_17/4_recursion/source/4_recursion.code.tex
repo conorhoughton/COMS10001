@@ -37,22 +37,22 @@ else
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{factorial with tail recursion}
-\begin{lstlisting}[numbers=left]
-int factorial_r(int n, int big_n)
-{
-  if(n<2)
-    return big_n;
+%% \begin{frame}[fragile]{factorial with tail recursion}
+%% \begin{lstlisting}[numbers=left]
+%% int factorial_r(int n, int big_n)
+%% {
+%%   if(n<2)
+%%     return big_n;
 
-  return factorial_r(n-1,n*big_n);
-}
+%%   return factorial_r(n-1,n*big_n);
+%% }
 
-int factorial(int n)
-{
-  return factorial_r(n,1);
-}
-\end{lstlisting}
-\end{frame}
+%% int factorial(int n)
+%% {
+%%   return factorial_r(n,1);
+%% }
+%% \end{lstlisting}
+%% \end{frame}
 
 \begin{frame}[fragile]{binary search with recursion 1}
 \begin{lstlisting}[numbers=left]
