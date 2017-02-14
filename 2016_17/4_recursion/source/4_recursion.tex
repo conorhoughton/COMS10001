@@ -142,7 +142,7 @@ else
    ans=c;
 \end{lstlisting}
 \caption{The ternary operator ans = a ? b : c evaluates a and then
-  does either sets ans=b or ans=c depending on whether a is true of
+  either sets ans=b or ans=c depending on whether a is true or
   false.  Thus ans=a ? b : c is equivalent to the code above. Ternary
   operators are often faster to execute than the corresponding if
   statement.\label{c_ternary}}
@@ -157,7 +157,7 @@ int search(int a[],int n, int val)
   return find_r(a,n,val,0,n-1);
 }
  
-int find_r(int a[],int n, int val,int low,int high)
+int find_r(int a[], int val,int low,int high)
 {
 
   if(high<low)
@@ -169,9 +169,9 @@ int find_r(int a[],int n, int val,int low,int high)
     return mid;
 
   if(val>a[mid])
-    return find_r(a,n,val,mid+1,high);
+    return find_r(a,val,mid+1,high);
   
-  return find_r(a,n,val,low,mid-1);
+  return find_r(a,val,low,mid-1);
 }
 \end{lstlisting}
 \caption{A recursive implementation of binary search. There are two
