@@ -58,14 +58,14 @@ else
 \begin{lstlisting}[numbers=left]
 int search(int a[],int n, int val)
 {
-  return find_r(a,n,val,0,n-1);
+  return find_r(a,val,0,n-1);
 }
 \end{lstlisting}
 \end{frame}
 
 \begin{frame} [fragile]{binary search with recursion 2}
 \begin{lstlisting}[numbers=left,firstnumber=5]
-int find_r(int a[],int n,int val,int low,int high)
+int find_r(int a[],int val,int low,int high)
 {
 
   if(high<low)
@@ -77,9 +77,9 @@ int find_r(int a[],int n,int val,int low,int high)
     return mid;
 
   if(val>a[mid])
-    return find_r(a,n,val,mid+1,high);
+    return find_r(a,val,mid+1,high);
   
-  return find_r(a,n,val,low,mid-1);
+  return find_r(a,val,low,mid-1);
 }
 \end{lstlisting}
 \end{frame}
