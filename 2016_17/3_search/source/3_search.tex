@@ -56,7 +56,7 @@ recursion yet. The idea is to divide the array in half and check which
 half, the half with bigger numbers or the half with smaller numbers,
 the value we are searching for belongs to and to keep doing this,
 dividing the remaining part of the array into two parts again and again
-until the remaining part of the array that is being search has only
+until the remaining part of the array that is being searched has only
 one element. A code listing is given in Table~\ref{c_binary_search}.
 
 \begin{table}
@@ -83,7 +83,7 @@ int search(int a[],int n, int val)
   is bigger then it does the same in the top half of the array, if it
   is smaller, in the bottom half and then repeats until there are no
   elements left. The program {\tt binary\_search.c} implements
-  this.\label{c_binary_search}.}
+  this.\label{c_binary_search}}
 \end{table}
 
 This search is extremely fast. There is a chance that a[mid]==val,
