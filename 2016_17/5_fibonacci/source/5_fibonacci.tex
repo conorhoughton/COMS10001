@@ -1,5 +1,5 @@
 %6_fibonacci.tex
-%notes for the course PandA1 COMS10002 taught at the University of Bristol
+%notes for the course PandA2 COMS10001 taught at the University of Bristol
 %2015 Conor Houghton conor.houghton@bristol.ac.uk
 
 %To the extent possible under law, the author has dedicated all copyright 
@@ -10,14 +10,13 @@
 \documentclass[11pt,a4paper]{scrartcl}
 \typearea{12}
 \usepackage{graphicx}
-\usepackage{pstricks}
 \usepackage{listings}
 \lstset{language=C}
 \pagestyle{headings}
-\markright{COMS10002 - PandA1 6\_fibonacci - Conor}
+\markright{COMS10001 - PandA2 5\_fibonacci - Conor}
 \begin{document}
 
-\subsection*{6 The interesting case of the Fibonacci sequence}
+\subsection*{5 The interesting case of the Fibonacci sequence}
 
 Although it is now associated with Leonardo Fibonacci, who wrote about
 it in the thirteenth century, the Fibonacci sequence was described in
@@ -142,13 +141,12 @@ clear that the recursive Fibonacci algorithm is $O(\tau^n)$ because
 $(1-\tau)^n$ is very small for large $n$. This is terrible. The reason
 this algorithm is so poor is that it calculates lots of quantities
 lots of times, for example \texttt{fib(n-2)} is calculated when it is
-called by \texttt{fib(n)} and when it is called by \texttt{fib(n-1)};
-\texttt{fib(n-3)} is called by both \texttt{fib(n-2)} and by \texttt{fib(n-1)}
-and so on.
+called by \texttt{fib(n)} and when it is called by \texttt{fib(n-1)},
+and this extra works gets worse and worse as you go further down.
 
 There are better ways to calculate the Fibonacci sequence!
 Table~\ref{c_fib_good_recursion} gives a better algorithm; this
-algorithm uses tail recursion and basically passes along the last two
+algorithm uses recursion but basically passes along the last two
 numbers. It is easy to calculate the running time; on the face of it
 \begin{equation}
 T(n)=c+T(n-1)
@@ -170,7 +168,7 @@ or, by the laws of logs
 \begin{equation}
 \log_{10} F(n) \approx n\log_{10}\tau \approx 0.2090 n
 \end{equation}
-In other words, since $\lfloor log_{10} A\rfloor$ gives the number of
+In other words, since $\lfloor \log_{10} A\rfloor$ gives the number of
 digits in $A$, the funny bracket is \lq{}floor\rq{}, the number
 rounded down, $F(n)$ has about $n/5$ digits, or put another way, the
 number of digits in $F(n)$ is $O(n)$. A graph of the length of $F(n)$
