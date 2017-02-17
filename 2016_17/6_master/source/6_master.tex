@@ -41,7 +41,7 @@ solved. In the binary search example the size of this part of the
 problem didn't depend on $n$ so $f(n)=t_0$ for some constant $t_0$, or put
 another way, $f(n)\in O(1)$.
 
-The master theorem tells us the big-oh complexity of $T(n)$ if the
+The master theorem tells us the big-Oh complexity of $T(n)$ if the
 large $n$ behavior of $f(n)$ satisfies some conditions which depend on
 $a$ and $b$. Furthermore, it is a proper theorem, our aim in this
 course is to get used to doing rough estimates of complexity without
@@ -99,8 +99,13 @@ on how fast $f(n)$ grows. This is what gives the first and third
 cases; in the first case $f(n)$ grows slowly enough to allow the first
 term to dominate the behaviour, in the third case $f(n)$ grows so fast
 it takes control. The second case is a kind of in-between case. Since
+<<<<<<< HEAD
 the first case is about $f(n)$ growing slower than $n^{\log_ba}$
 we specify the behavior of $f(n)$ using big-oh: $f(n)\in O(n^c)$ for
+=======
+the first case is about $f(n)$ being growing slower than $n^{\log_ba}$
+we specify the behavior of $f(n)$ using big-Oh: $f(n)\in O(n^c)$ for
+>>>>>>> 4b994be2a3e4e129db67738906496d7fc4ccd6a3
 $c<\log_ba$. Conversely, the third case applies to functions that grow
 faster than $n^c$ so we specify the behavior of $f(n)$ using
 big-Omega. Finally, the middle case applies only to functions that
