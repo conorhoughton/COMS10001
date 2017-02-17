@@ -28,7 +28,7 @@ The master method is an approach to solving recurrences of the form
 T(n)=aT(n/b)+f(n)
 \end{equation}
 where $a\ge 1$ and $b\ge 1$ and $f(n)$ is some function which is
-positive for large enough $n$. This applies to a problem which the
+positive for large enough $n$. This applies to a problem in which the
 recursion requires the solution of $a$ sub-problems of size $n/b$. In
 the case of binary search we had
 \begin{equation}
@@ -45,9 +45,9 @@ The master theorem tells us the big-oh complexity of $T(n)$ if the
 large $n$ behavior of $f(n)$ satisfies some conditions which depend on
 $a$ and $b$. Furthermore, it is a proper theorem, our aim in this
 course is to get used to doing rough estimates of complexity without
-try for much rigor, but our \textsl{ad hoc} approach is embedded in a
+trying for much rigor, but our \textsl{ad hoc} approach is embedded in a
 rigorous one and in the proper study of algorithms and, indeed, in
-much of crypography, it is important to prove results about complexity
+much of cryptography, it is important to prove results about complexity
 properly. The master theorem is often useful for this.
 
 Before looking at the theorem, we need to note one confusing
@@ -66,7 +66,7 @@ algorithm the recursion relation is
 T(n)=T(n/2)+t_0
 \end{equation}
 if the last element examined is the element we are looking for; if the
-first element examine is the one we are looking then the algorithm
+first element examined is the one we are looking for then the algorithm
 takes fewer steps and, indeed, the best case, where the first element
 we look at is the one we want, is $\Omega(1)$. In this way, if we
 apply the master theorem to 
@@ -87,7 +87,7 @@ Obviously we haven't stated the third posibility fully and, indeed, we
 won't be proving the master theorem. We haven't worried about the fact
 that $n/b$ may not be an integer, in practise in divide and conquer
 algorithms $n/b$ gets rounded up or down to the nearest integer. We
-saw this in case of binary search and, in fact, it doesn't make any
+saw this in the case of binary search and, in fact, it doesn't make any
 difference to the theorem.
 
 Roughly speaking the large $n$ behaviour of the recursion
@@ -99,7 +99,7 @@ on how fast $f(n)$ grows. This is what gives the first and third
 cases; in the first case $f(n)$ grows slowly enough to allow the first
 term to dominate the behaviour, in the third case $f(n)$ grows so fast
 it takes control. The second case is a kind of in-between case. Since
-the first case is about $f(n)$ being growing slower than $n^{\log_ba}$
+the first case is about $f(n)$ growing slower than $n^{\log_ba}$
 we specify the behavior of $f(n)$ using big-oh: $f(n)\in O(n^c)$ for
 $c<\log_ba$. Conversely, the third case applies to functions that grow
 faster than $n^c$ so we specify the behavior of $f(n)$ using
