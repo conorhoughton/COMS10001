@@ -106,14 +106,58 @@ solve the recursion relation. Our approach here is to do what we have
 been doing, we guess, based on the examples we've studied, and then
 show we are correct by substituting back in.
 
+\begin{table}[b]
+\begin{lstlisting}[numbers=left]
+int factorial(int n)
+{
+   if(n<2)
+      return 1;
+
+   return n*factorial(n-1);
+}
+
+\end{lstlisting}
+\caption{The recursive function for calculating $n!=n(n-1)\ldots 1$. If $n<2$ it returns 1, giving a terminating condition, it also means $0!=1$ which is a normal mathematical convention, otherwise it calls factorial(n-1). If you trying using this function, note that for even modest values of n, n! is too big to fit into int.\label{c_factorial}}
+\end{table}
+
+
+\begin{table}
+\begin{lstlisting}[numbers=left]
+int factorial(int n)
+{
+   return (n<2) ? 1 : n*factorial(n-1);
+}
+
+\end{lstlisting}
+\caption{A fancier version of the factorial program which uses the ternary operator described in Table~\ref{c_ternary}.\label{c_factorial_fancy}}
+\end{table}
+                  
+
+   
+\begin{table}
+\begin{lstlisting}[numbers=left]
+if (a)
+   ans=b;
+else 
+   ans=c;
+\end{lstlisting}
+\caption{The ternary operator ans = a ? b : c evaluates a and then
+  either sets ans=b or ans=c depending on whether a is true or
+  false.  Thus ans=a ? b : c is equivalent to the code above. Ternary
+  operators are often faster to execute than the corresponding if
+  statement.\label{c_ternary}}
+\end{table}
+ 
+
+
 \begin{table}
 \begin{lstlisting}[numbers=left]
 int search(int a[],int n, int val)
 {
-  return find_r(a,n,val,0,n-1);
+  return find_r(a,val,0,n-1);
 }
  
-int find_r(int a[],int n, int val,int low,int high)
+int find_r(int a[], int val,int low,int high)
 {
 
   if(high<low)
@@ -125,13 +169,13 @@ int find_r(int a[],int n, int val,int low,int high)
     return mid;
 
   if(val>a[mid])
-    return find_r(a,n,val,mid+1,high);
+    return find_r(a,val,mid+1,high);
   
-  return find_r(a,n,val,low,mid-1);
+  return find_r(a,val,low,mid-1);
 }
 \end{lstlisting}
 \caption{A recursive implementation of binary search. There are two
-  halting conditions, val is found, or high<low, meaning that val
+  halting conditions, val is found, or high\<low, meaning that val
   isn't an element of a. Note that, though each call works with a
   smaller and smaller number of elements, for convenience the same
   array is used each time. This function is implemented in \texttt{

@@ -1,8 +1,17 @@
 
+The printed notes are the primary source for these lectures. If you
+are looking for background reading an excellent text book is
+Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson,
+Ronald L. Rivest and Clifford Stein
+
 1. lecture 1 (2017-01-27) introduction, discussion of insert sort,line-by-line estimate of run time. O(n^2) mentioned. Based on
 1_introduction.
 
 2. lecture 2 (2017-02-03) recap of insert sort, definition of O(g(n))
 with some examples. Discussion of log_2 n, of n! and 2^n. Searching an
 ordered list, discussion of big-Omega and big-Theta. Based on
-1_introduction and 2_big_oh.
+1_introduction, 2_big_oh, 3_search.
+
+2. lecture 3 (2017-02-10) recursion, the example of working out
+factorials, the binary search example done from a recursion point of
+view. Telescoping and ansatz. Based on 3_search and 4_recursion.
