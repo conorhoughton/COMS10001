@@ -19,7 +19,7 @@
 \subsection*{7 Sorting - bubble sort and quicksort}
 
 We have already looked at one sorting algorithm, insert sort and found
-that it was $O(n^2)$. We also saw that it has only a O(1) extra memory
+that it was $O(n^2)$. We also saw that it has only a $O(1)$ extra memory
 requirement, that is, not including the memory to store the array
 itself, it only required a fixed amount of memory to run. Here we are
 going to look at other sorting algorithms, both because sorting
@@ -47,7 +47,7 @@ with each pass involving $n-1$ comparisons. This is because each pass
 basically moves the largest unsorted element to its correct
 position. Bubble sort is $O(1)$ in extra memory. However, although it
 appears in these characteristics to match insert sort, it is regarded
-as being inferior because, in practise, it is slower, particularly for
+as being inferior because, in practice, it is slower, particularly for
 lists that are close to being sorted. There are improvements, like
 cocktail sort, which alternates sorting big elements up and small ones
 down, and comb sort which initially moves elements by more than one
@@ -127,9 +127,9 @@ void bubble(int a[], int n)
 Quicksort, usually written like that, as one word, is probably the
 most popular sorting algorithm. It was discovered in 1960 by Tony
 Hoare. It works by choosing an element, possibly at random, called the
-partition value or pivot, lets say it has value $p$. The list is then
+partition value or pivot, let's say it has value $p$. The list is then
 split into two piles, elements less than $p$ and elements greater
-than, or equal to, $p$. This is then repeated recursively on each of
+than $p$. This is then repeated recursively on each of
 the two piles with the recursion terminating if a pile has only one
 element. Crucially, with a bit of care, the process of splitting the
 list into two piles can be done in place, so no substantial extra
@@ -160,7 +160,7 @@ those two piles.
   pile.\label{table_quick_divide}}
 \end{table}
 
-So, lets examine quicksort in practise and ignore for now how the
+So, let's examine quicksort in practise and ignore for now how the
 partition value is chosen $p$. A marker $i$ is placed at the first
 entry of the list, and another $j$ at the last entry. If $a[i]<p$ and
 $a[j]\ge p$ then both $a[i]$ and $a[j]$ are in the correct pile and
@@ -176,11 +176,11 @@ $a[i]\ge p$ and $j$ is decreased until $a[j]<p$, then, if $i<j$ the
 two entries are swapped. This part of quicksort is illustrated in
 Table~\ref{table_quick_divide}.
 
-The algorithm is then applied recursively to each of the pile. If a
+The algorithm is then applied recursively to each of the piles. If a
 pile has only one entry it is already sorted, if it has two it can be
 sorted with a single comparison and, if needed, a single swap. We still
 haven't dealt with the choice of the partition point. Obviously the
-best thing is to chose a value that splits the pile more-or-less in
+best thing is to choose a value that splits the pile more-or-less in
 half each time; if you are very unlucky and choose the lowest value
 then the lower pile would be empty. The normal approach is called
 median of threes, three entries are chosen and the middle one is used
@@ -226,7 +226,7 @@ have $\log_ba=\log_22=1$ so this is the marginal case where $T(n)\in
 \Theta(n^c\log n)$, with $c=1$ this means $T(n)\in \Theta(n\log n)$,
 with the warning that this applies to the $T(n)$ that satisfies the
 recursion relation, which isn't always all the run times, in
-particular, here, the run time only satisfies the recursion is the
+particular, here, the run time only satisfies the recursion if the
 pivot divides the piles in half.
 
 Since we were able to use the master theorem there is really no need
@@ -373,7 +373,7 @@ list, the pile of entries with value lower than the partition value
 will be empty. If we have adapted the strategy of excluding the
 partition value from both piles, then this run through will have
 reduced the number of elements by one. If this were to happen every
-time the run time for quicksort would $O(n^2)$, as bad as insertion
+time the run time for quicksort would be $O(n^2)$, as bad as insertion
 sort since each run through involves $n$ comparisons and reduces the
 number of elements by only one. In other words, the worst case run
 time for quicksort is $O(n^2)$. If a median of threes approach is used
