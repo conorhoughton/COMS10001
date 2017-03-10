@@ -23,7 +23,7 @@ splits the array of entries it divides them into a lower and upper
 group so that when the process reaches the bottom, with one or two
 element sub-arrays, the whole array is sorted. Merge sort, sometimes
 called mergesort, works the other way, sorting the subarrays as it
-merges them together. It was invented in 1945 by John van Neumann, a towering
+merges them together. It was invented in 1945 by John von Neumann, a towering
 figure in mid-C20 computer science and mathematics. It works because
 merging two sorted arrays into another sorted array is an $O(n)$
 operation.
@@ -121,7 +121,6 @@ void merge_sort_r(int a[], int merged_a[],int first, int last)
 
    merge(a, merged_a, first, mid, last);
 
-   return;
 }
 \end{lstlisting}
 \caption{Merge sort. This splits the array, calls itself recursively
