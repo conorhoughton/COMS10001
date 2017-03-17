@@ -495,24 +495,31 @@ float min_value(Node* a)
   with the optimal score.\label{c_minimax}}
 \end{table}
 
+In practice a poor chess player looks forward four ply; a great one
+eight but a great player also has more global ideas and intuitions
+about the game, basically their heuristic is better. The computer that
+beat Kasparov could look forward roughly 12 ply, the extra four ply
+allowed it to beat the human; however, Deep Blue also did pruning, it
+didn't look down every branch. This is what we discuss next.
 
 \subsubsection*{Alpha-beta pruning}
 
-In practise this scheme is supplemented by lots of tricks, for a start
+In practice this scheme is supplemented by lots of tricks, for a start
 different scoring schemes could be experimented on, a \lq{}book\rq{}
-of well known opening sequences and endgames could stored and
-\lq{}interesting\rq{} branches could be explored deeper. Another
-concrete improvement is provided by pruning. This is easy to
-understand given an example; first consider the simple example given
-by the portion of the nim tree given in Fig.~\ref{fig:nim-alpha-beta};
-imagine we are trying to score the $(1,2,2)$ node as part of a larger
-evaluation. In Fig.~\ref{fig:nim-alpha-beta}B we see that after the
-left-most branch has been scored we have a score of -1, since here
-Brendan is to play at $(1,2,2)$ and -1 is the best he can do, we don't
-need to evaluate the other two branches, they cannot beat the -1 we
-already have. Of course, this was partly a matter of luck, if we had
-done the rightmost branch first it would have given a +1, and at least
-one more branch needs to have been evaluated.
+of well known opening sequences and endgames could stored; even in the
+mid-game a playbook of zingers could help with common plays. Often
+\lq{}interesting\rq{} branches are explored deeper. Another, more concrete,
+improvement is provided by pruning. This is easy to understand given
+an example; first consider the simple example given by the portion of
+the nim tree given in Fig.~\ref{fig:nim-alpha-beta}; imagine we are
+trying to score the $(1,2,2)$ node as part of a larger evaluation. In
+Fig.~\ref{fig:nim-alpha-beta}B we see that after the left-most branch
+has been scored we have a score of -1, since here Brendan is to play
+at $(1,2,2)$ and -1 is the best he can do, we don't need to evaluate
+the other two branches, they cannot beat the -1 we already have. Of
+course, this was partly a matter of luck, if we had done the rightmost
+branch first it would have given a +1, and at least one more branch
+needs to have been evaluated.
 
 \begin{figure}
 A)
