@@ -84,7 +84,7 @@ or $(0,2,2)$. From $(1,2,2)$ there are then three alternatives,
 leading to $(0,1,2)$, $(1,1,2)$ and $(0,2,2)$, and so on.
 
 Now the leaves of the tree all have two zeros, whoever has the next
-move wins. This means we can score the leaves; for definiteness lets
+move wins. This means we can score the leaves; for definiteness let's
 imagine Aoife has the first go so if this is to be an AI for a
 computer then Aoife is the computer and the purpose of this
 calculation is to choose which move Aoife should make at $(2,2,2)$ to
@@ -92,13 +92,6 @@ win. Obviously the different levels in the tree alternate between the
 two players, so the level of the root corresponds ot Aoife moving, the
 next level, with $(1,2,2)$ and $(0,2,2)$ to Brendan and so on. The
 different levels are sometimes called \textsl{ply} in this context.
-
-We will score +1 for leaves where the Aoife has the next go and is
-thus able to win, -1 if the Brendan does. This is shown in
-Fig.~\ref{fig:nim-leaves}; the problem is that the leaves are far
-removed from the current move, Aoife is at $(2,2,2)$ and decided
-between $(1,2,2)$ and $(0,2,2)$; we need to move the scoring up from
-the leaves to the root.
 
 \begin{figure}
 \begin{center}
@@ -147,6 +140,16 @@ the leaves to the root.
   track of who is playing, Aoife is bold, whereas Brendan opponent is
   unbolded, so for a bolded node Aoife takes the next move. \label{fig:nim}}
 \end{figure}
+
+
+We will score +1 for leaves where the Aoife has the next go and is
+thus able to win, -1 if the Brendan does. This is shown in
+Fig.~\ref{fig:nim-leaves}; the problem is that the leaves are far
+removed from the current move, Aoife is at $(2,2,2)$ and decided
+between $(1,2,2)$ and $(0,2,2)$; we need to move the scoring up from
+the leaves to the root.
+
+
 
 \begin{figure}
 \begin{center}
@@ -213,18 +216,6 @@ the one that gives -1, hence this node is also worth -1; similarly for
 each time the parent inheriting either the lowest or highest of the
 scores of its children, depending on whose go it corresponds to. 
 
-The first step for this process is shown in
-Fig.~\ref{fig:nim-leaves_2}; notices that in the case of
-\textbf{112}:a the two children each have score -1 so although this is
-Aoife's turn, she is forced to choose a losing move and \textbf{112}:a
-is scored -1. Finally in Fig.~\ref{fig:nim-leaves_3} the scores have
-propagated to the top and we see that if Aoife takes the right option,
-$(0,2,2)$, she will win no matter what Brendan does, whereas if she
-takes the right option Brendan can win if he plays optimally.
-
-
-
-
 \begin{figure}
 \begin{center}
 \begin{tikzpicture}
@@ -271,6 +262,16 @@ takes the right option Brendan can win if he plays optimally.
   the nodes in the text and have no meaning in the context of the
   game. \label{fig:nim-leaves_1}}
 \end{figure}
+
+
+The first step for this process is shown in
+Fig.~\ref{fig:nim-leaves_2}; notices that in the case of
+\textbf{112}:a the two children each have score -1 so although this is
+Aoife's turn, she is forced to choose a losing move and \textbf{112}:a
+is scored -1. Finally in Fig.~\ref{fig:nim-leaves_3} the scores have
+propagated to the top and we see that if Aoife takes the right option,
+$(0,2,2)$, she will win no matter what Brendan does, whereas if she
+takes the right option Brendan can win if he plays optimally.
 
 
 \begin{figure}
@@ -415,12 +416,12 @@ compared to the number of choices for a game like chess or go.
 In a chess game there are typically 37 available moves and a typical
 chess game has 100 moves in total, clearly this makes exploring the
 game to the end is infeasible. In go the situation is even more
-extreme, the number of possible moves is usually more than 100 and a
-game usually involves more turns than in chess. This creates an
+extreme; the number of possible moves is usually more than 100 and a
+game usually involves more turns than chess. This creates an
 horizon, a distance down the tree beyond which it is infeasible, given
-computer speed and game tempo, to search; this means that the leaves,
+computer speed and game tempo, to search which means that the leaves,
 the terminal nodes, often don't represent a final resolution of the
-game and so they can't be attributed score to represent win, loss or
+game and so they can't be attributed a score to represent win, loss or
 draw.
 
 The way out of this is to score the leaves using a heuristic, some
@@ -487,7 +488,7 @@ float min_value(Node* a)
   recursively, the recursion alternates, with \texttt{max\_value}
   calling \texttt{min\_value} and visa versa. It is not full working
   code in the sense that it relies on a \texttt{Node} struct which is
-  not give along with a number of functions: \texttt{terminal\_node}
+  not given along with a number of functions: \texttt{terminal\_node}
   returns true for a leaf and false otherwise, \texttt{utility}
   returns the score, \texttt{number\_of\_children} returns the number
   of children and \texttt{get\_child} returns the \texttt{i}th
@@ -593,11 +594,11 @@ aim is to get the score for the node labelled \lq{}unknown score
 a\rq{}, in this example this node is the maximizing node. So far the
 left sub-branch has been scored to give 20 but the right branch hasn't
 been finished, in fact the first, leftmost, branch of the right branch
-ha been scored to give 10; now \lq{}unknown score b\rq{} is a
+has been scored to give 10; now \lq{}unknown score b\rq{} is a
 minimizing node, so although most of its children haven't been score
 we know that it will score no more than 10 because that score is
 already available. Since \lq{}unknown score a\rq{} is a maximimizing
-not it will never choose \lq{}unknown score b\rq{} since 20 is bigger
+node it will never choose \lq{}unknown score b\rq{} since 20 is bigger
 than 10. For this reason the other unscored children of \lq{}unknown
 score b\rq{} don't need to be evaluated and this whole branch can be
 pruned, freeing up more time to explore elsewhere. This is alpha-beta
@@ -625,7 +626,7 @@ Fig.~\ref{fig:partial}. The root calls \texttt{max\_value} with
 to $\infty$. The first node gives 20, so \texttt{below} is set to 20;
 this means \texttt{min\_value} is called on the right branch with
 \texttt{below} as 20; when the first branch returns 10 this is
-compared to \texttt{below} and since $10<20$ this return 10 and the
+compared to \texttt{below} and since $10<20$ this returns 10 and the
 other nodes are not evaluated.
 
    
