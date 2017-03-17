@@ -437,6 +437,65 @@ difference between the two players. Now, in this scheme, each leaf is
 evaluated using the heuristic and the score is propagated backwards
 under the assumption that each player plays optimally.
 
+Since we haven't studied data structures yet we can't really consider
+an implementation of minimax, however a sketch of such a program is
+given in Table~\ref{c_minimax}.
+   
+\begin{table}
+\begin{lstlisting}[numbers=left]
+int which_child(Node* a)
+{
+   max_value(a);
+   return a.best_child;
+}
+
+float max_value(Node* a)
+{
+   if(terminal_node(a)) return utility(a);
+
+   int i;
+   float v=big_number,u;
+   
+   for(i=0;i<number_of_children(a);i++){
+      u=min_value(get_child(a,i));
+      if(u>v){
+         v=u;
+         a->best_child=i;
+      }
+   }
+   return v;
+}
+
+float min_value(Node* a)
+{
+   if(terminal_node(a)) return utility(a);
+
+   int i;
+   float v=-big_number,u;
+   
+   for(i=0;i<number_of_children(a);i++){
+      u=max_value(get_child(a,i));
+      if(u<v){
+         v=u;
+         a->best_child=i;
+      }
+   }
+   return v;
+}
+\end{lstlisting}
+\caption{Minimax. This code implements the minimax algorithm
+  recursively, the recursion alternates, with \texttt{max\_value}
+  calling \texttt{min\_value} and visa versa. It is not full working
+  code in the sense that it relies on a \texttt{Node} struct which is
+  not give along with a number of functions: \texttt{terminal\_node}
+  returns true for a leaf and false otherwise, \texttt{utility}
+  returns the score, \texttt{number\_of\_children} returns the number
+  of children and \texttt{get\_child} returns the \texttt{i}th
+  child. It also has \texttt{best\_child} to keep track of the child
+  with the optimal score.\label{c_minimax}}
+\end{table}
+
+
 \subsubsection*{Alpha-beta pruning}
 
 In practise this scheme is supplemented by lots of tricks, for a start
@@ -550,10 +609,67 @@ pruning.
 \caption{Here the left branch has been fully scored, the right branch has only been partially scored, the left part gives 10, the rest hasn't been considered yet.\label{fig:partial}}
 \end{figure}
 
+Outline code for running minimax with alpha-beta pruning is given in
+Table~\ref{c_alpha_beta}. This code might not seem completely
+transparent at first since it is tricky to see how to keep track of
+when to prune, to see how it works consider running it on the tree in
+Fig.~\ref{fig:partial}. The root calls \texttt{max\_value} with
+\texttt{below} set to $-\infty$, or equivalent, and \texttt{above} set
+to $\infty$. The first node gives 20, so \texttt{below} is set to 20;
+this means \texttt{min\_value} is called on the right branch with
+\texttt{below} as 20; when the first branch returns 10 this is
+compared to \texttt{below} and since $10<20$ this return 10 and the
+other nodes are not evaluated.
 
+   
+\begin{table}
+\begin{lstlisting}[numbers=left]
+int which_child(Node* a)
+{
+   max_value(a,-big_number,big_number);
+   return a.best_child;
+}
 
+float max_value(Node* a,float below,float above)
+{
+   if(terminal_node(a)) return utility(a);
 
+   int i;
+   float v=big_number,u;
+   
+   for(i=0;i<number_of_children(a);i++){
+      u=min_value(get_child(a,i),below,above);
+      if(u>v){
+         v=u;
+         a->best_child=i;
+      }
+      if(v>=above) return v;
+      if(v>below) below=v;
+   }
+   return v;
+}
 
+float min_value(Node* a)
+{
+   if(terminal_node(a)) return utility(a);
+
+   int i;
+   float v=-big_number,u;
+   
+   for(i=0;i<number_of_children(a);i++){
+      u=max_value(get_child(a,i),below,above);
+      if(u<v){
+         v=u;
+         a->best_child=i;
+      }
+      if(v<=below) return v;
+      if(v<above) above=v;
+   }
+   return v;
+}
+\end{lstlisting}
+\caption{Minimax with alpha-beta pruning. Here \texttt{above} and \texttt{below} ae used to keep track of pruning values; the clever thing is how the pruning values are pushed down from above.\label{c_alpha_beta}}
+\end{table}
 
 
 
