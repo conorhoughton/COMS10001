@@ -123,7 +123,6 @@ A=\left(
 \right)
 \end{equation}
 
-
 \begin{figure}
 \begin{center}
 \begin{tikzpicture}
@@ -144,6 +143,28 @@ A=\left(
 \end{center}
 \caption{A directed graph. \label{fig:dir_graph}}
 \end{figure}
+
+Here we will be concerned with paths through graphs, it is possible to
+give careful definitions of what we mean, but the ideas are intuitive
+and clear enough to make do with less formal definitions. A
+\textsl{walk} is a series of nodes and edges so that each node is
+connected to one end of the subsequent edge and the node after that to
+the other end, that is, it is a path going from node to node along
+edges without any jumps. A \textsl{trail} is a walk in which no edge
+is repeated. Here a \textsl{cycle} is a closed trail, that is a trail
+that begins and ends at the same point; I say here because the term
+cycle is sometimes used for a closed walk. Finally, a \textsl{tree} is
+a graph with no cycles; trees are named because they are like trees, but not like the tree in Fig.~\ref{fig:not_a_tree}.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=6cm]{not_a_tree_bw.jpg}
+\end{center}
+\caption{This tree is not a tree, photographed in Hedgemead Park in Bath.\label{fig:not_a_tree}}
+\end{figure}
+
+
+
 
 
 \begin{figure}
