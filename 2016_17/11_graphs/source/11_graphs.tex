@@ -11,9 +11,11 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{tikz}
+\usepackage{tkz-berge}
 %\usepackage{tikz-qtree}                                                        
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows.meta}
+\usetikzlibrary{shapes.geometric}
 \lstset{language=C}
 \pagestyle{headings}
 \markright{COMS10001 - PandA2 11\_graphs - Conor}
@@ -144,6 +146,25 @@ A=\left(
 \caption{A directed graph. \label{fig:dir_graph}}
 \end{figure}
 
+For an undirected graph the \textsl{degree} of a node is the number of
+edges incident to it. Thus, for the graph in Fig.~\ref{fig:graph} the
+node $a$ has degree three, $b$ has degree two, $c$ three, $d$ three
+and $e$ has degree one. The degree is an important quantity for
+describing graphs, though it won't be discussed here, often in
+applications of graph theory dynamics on a graph is considered, for
+example, epidemiological models are run on graphs were the nodes are
+people and the edges contact, so, for a sexually transmitted disease
+an edge would link two people who had had sex, in a disease that is
+spread by aerosol it would link two people who had been in the same
+room. For models like this the average degree of the nodes, and the
+distribution of degrees, has a strong effect on the dynamics. The
+degree can also be defined for directed graphs, for a directed graph
+the degree is the number of incoming edges minus the number of
+outgoing, so, for the graph in Fig.~\ref{fig:dir_graph} the degree of
+$a$ is zero, whereas the degree of $b$ is -1.
+
+
+
 Here we will be concerned with paths through graphs, it is possible to
 give careful definitions of what we mean, but the ideas are intuitive
 and clear enough to make do with less formal definitions. A
@@ -155,17 +176,6 @@ is repeated. Here a \textsl{cycle} is a closed trail, that is a trail
 that begins and ends at the same point; I say here because the term
 cycle is sometimes used for a closed walk. Finally, a \textsl{tree} is
 a graph with no cycles; trees are named because they are like trees, but not like the tree in Fig.~\ref{fig:not_a_tree}.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=6cm]{not_a_tree_bw.jpg}
-\end{center}
-\caption{This tree is not a tree, photographed in Hedgemead Park in Bath.\label{fig:not_a_tree}}
-\end{figure}
-
-
-
-
 
 \begin{figure}
 \begin{center}
@@ -184,6 +194,40 @@ a graph with no cycles; trees are named because they are like trees, but not lik
 \end{tikzpicture}
 \end{center}
 \caption{A graph: this is a weighted graph so the edges have a value. \label{fig:wei_graph}}
+\end{figure}
+
+  
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=6cm]{not_a_tree_bw.jpg}
+\end{center}
+\caption{This tree is not a tree, photographed in Hedgemead Park in Bath.\label{fig:not_a_tree}}
+\end{figure}
+
+\subsubsection*{Eulerian trees}
+
+The subject of Eulerian trees is usually introduced through Euler's
+original solution of the problem of the Seven Bridges of K\"onigsberg,
+K\"{o}nigsberg, now Kalingrad, was a Prussian town where, as the story
+is told, the townsfolk liked to walk in the evening over the seven
+bridges in the town that connected a city which spanned two banks of
+the river Pregel, along with two islands in the river. The layout is
+shown in Fig.~\ref{fig:konigsberg}. The townsfolk sometimes wondered
+if there was a route that would allow them to cross all the bridges,
+but each bridge only once. The great mathematician Euler solved this
+problem in 1736 by reducing it to a problem in graph theory, he
+observed that what mattered was the bridges, not the land, so he
+reduced the four land areas to nodes and thought of the bridges as
+island. This graph is shown in Fig.~\ref{fig:konigsberg_graph}.
+
+  
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=6cm]{Konigsberg_bridges.png}
+\end{center}
+\caption{A picture of historical K\"{o}nigsberg with its seven bridges [from wikipedia].\label{fig:konigsberg}}
 \end{figure}
 
 
@@ -207,8 +251,44 @@ a graph with no cycles; trees are named because they are like trees, but not lik
 \caption{The Bridges of K\"{o}nigsberg graph. \label{fig:konigsberg_graph}}
 \end{figure}
 
+Now, Euler reasoned like this: the townsfolk might start at one node
+and end at another, but for the other two nodes they needed to leave
+as often as they arrived, thus each visit used up two edges, one to
+arrive by and one to leave. In other words, if you imagine removing
+edges when the corresponding bridge has been traversed, visiting a
+node reduced its degree by two, when all the bridges had been crossed
+the degree of all the nodes must be reduced to zero, so unless a node
+represents the starting point or end point, it must have an even
+degree. Thus, if more than two nodes have odd degree, there is no
+trail that includes every edge. In the case of K\"{o}nigsberg all the
+nodes are odd, so there is no way the townsfolk can design a path that
+crosses every bridge exactly once.
 
+These days an \textsl{Eulerian trail} is a trail that visits every
+node and an \textsl{Eulerian cycle} is a cycle that does the same. The
+discussion of K\"{o}nigsberg above can be reformulated as a Theorem
+which states that a graph cannot have an Eulerian trail unless all the
+nodes have even degree or exactly two nodes have odd degree; a graph
+cannot have an Eulerian cycle unless all the nodes are even. In fact
+this theorem words the other way too, if a graph has only even degrees
+there is an Eulerian cycle, if it has two odd degree nodes it has an
+Eulerian trail starting at one odd node and ending at the other. We
+won't prove this, or formalize the proof above, but we will consider a
+construction for the Eulerian trail if there is one. Incidentally Thilo Gross from Eng Math found and walked an Eulerian trail for Bristol, he recounts his walk here: \texttt{http://www.reallygross.de/node/81}.
 
+The Eulerian trail uses every edge, this suggests a similar problem,
+the construction of a trail that visits every node exactly once. This
+type of trail is called a Hamiltonian trail and the problem of whether
+a graph has one is hard. Hamilton himself found a Hamiltonian trail
+for a graph that has the same connectivity as the surface of dodecahedron: this puzzle is given in Fig.~\ref{fig:hamiltonian}.
 
-
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+\GraphInit[vstyle=Simple]
+        \grDodecahedral[form=2] 
+\end{tikzpicture}                  
+\end{center}
+\caption{The Hamiltonian Game, a C19 puzzle which challenges you to find a trail that visits each node exactly once.\label{fig:hamiltonian}}
+\end{figure}
 \end{document}
