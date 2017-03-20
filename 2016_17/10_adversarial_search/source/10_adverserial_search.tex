@@ -16,7 +16,7 @@
 \markright{COMS10001 - PandA2 10\_adversarial\_search - Conor}
 \begin{document}
 
-\subsection*{10 - adversarial search}
+\subsection*{10 - adversarial search\footnote{\texttt{http://github.com/conorhoughton/COMS10001}}
 
 Here we will consider adversarial search: algorithms designed to allow
 a computer to develop an optimal strategy for an adversarial game, or
@@ -27,10 +27,11 @@ pattern recognition using modern biometic neural networks like
 deep-learning networks, instead it relies on the brutish computational
 power of a computer to \lq{}play ahead\rq{} and see the consequence of
 different moves. With tweaks, this is the algorithm that allowed Deep
-Blue beat Garry Kasparov, the world chess champion, in 1996, realizing
-a proposal, originally due to Claude Shannon, that computers can play
-chess. It is not the algorithm that allowed AlphaGo beat Lee Sidol, a
-9th Dan Go champion, in 2016, that was a deep learning network.
+Blue to beat Garry Kasparov, the world chess champion, in 1997,
+realizing a proposal, originally due to Claude Shannon, that computers
+can play chess. It is not the algorithm that allowed AlphaGo to beat
+Lee Sidol, a 9th Dan Go champion, in 2016, that was a deep learning
+network.
 
 Roughly speaking we are thinking about a game without chance where two
 players alternate in taking a move which changes the game state. In
@@ -89,7 +90,7 @@ imagine Aoife has the first go so if this is to be an AI for a
 computer then Aoife is the computer and the purpose of this
 calculation is to choose which move Aoife should make at $(2,2,2)$ to
 win. Obviously the different levels in the tree alternate between the
-two players, so the level of the root corresponds ot Aoife moving, the
+two players, so the level of the root corresponds to Aoife moving, the
 next level, with $(1,2,2)$ and $(0,2,2)$ to Brendan and so on. The
 different levels are sometimes called \textsl{ply} in this context.
 
@@ -137,13 +138,14 @@ different levels are sometimes called \textsl{ply} in this context.
   equivalent choices have been left out, so it includes $(1,2,2)$ on
   the second ply, but not $(2,1,2)$; for clarity the triples are
   arranges in ascending order. Alternative ply are bolded to help keep
-  track of who is playing, Aoife is bold, whereas Brendan opponent is
-  unbolded, so for a bolded node Aoife takes the next move. \label{fig:nim}}
+  track of who is playing, Aoife is bold, whereas opponent is
+  unbolded, so for a bolded node Aoife takes the next
+  move. \label{fig:nim}}
 \end{figure}
 
 
-We will score +1 for leaves where the Aoife has the next go and is
-thus able to win, -1 if the Brendan does. This is shown in
+We will score +1 for leaves where Aoife has the next go and is thus
+able to win, -1 if Brendan does. This is shown in
 Fig.~\ref{fig:nim-leaves}; the problem is that the leaves are far
 removed from the current move, Aoife is at $(2,2,2)$ and decided
 between $(1,2,2)$ and $(0,2,2)$; we need to move the scoring up from
@@ -415,13 +417,13 @@ compared to the number of choices for a game like chess or go.
 
 In a chess game there are typically 37 available moves and a typical
 chess game has 100 moves in total, clearly this makes exploring the
-game to the end is infeasible. In go the situation is even more
-extreme; the number of possible moves is usually more than 100 and a
-game usually involves more turns than chess. This creates an
-horizon, a distance down the tree beyond which it is infeasible, given
-computer speed and game tempo, to search which means that the leaves,
-the terminal nodes, often don't represent a final resolution of the
-game and so they can't be attributed a score to represent win, loss or
+game to the end infeasible. In go the situation is even more extreme;
+the number of possible moves is usually more than 100 and a game
+usually involves more turns than chess. This creates a horizon, a
+distance down the tree beyond which it is infeasible, given computer
+speed and game tempo, to search which means that the leaves, the
+terminal nodes, often don't represent a final resolution of the game
+and so they can't be attributed a score to represent win, loss or
 draw.
 
 The way out of this is to score the leaves using a heuristic, some
@@ -595,7 +597,7 @@ a\rq{}, in this example this node is the maximizing node. So far the
 left sub-branch has been scored to give 20 but the right branch hasn't
 been finished, in fact the first, leftmost, branch of the right branch
 has been scored to give 10; now \lq{}unknown score b\rq{} is a
-minimizing node, so although most of its children haven't been score
+minimizing node, so although most of its children haven't been scored
 we know that it will score no more than 10 because that score is
 already available. Since \lq{}unknown score a\rq{} is a maximimizing
 node it will never choose \lq{}unknown score b\rq{} since 20 is bigger
