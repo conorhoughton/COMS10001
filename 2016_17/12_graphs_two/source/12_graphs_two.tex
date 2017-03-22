@@ -99,14 +99,21 @@ Playing with this example shows that the problem is with creating
 because all the links to them have been used up. At this point it is
 useful to define a \textsl{bridge}, a bridge is an edge which, if it
 was removed, would leave the graph disconnected; examples are given in
-Fig.~\ref{fig:bridge}. Now imagine removing the edges as you traverse
-them, if you remove a bridge then the nodes left behind cannot be
-returned to, so when trying to walk an Eulerian path it is important
-not to remove bridges if there are still edges to walk. This is
-basically Fleury's algorithm, it says that you should never choose a
-bridge if there is a choice.
+Fig.~\ref{fig:bridges}. Now imagine removing the edges as you traverse
+them, if you remove a bridge then you cannot return to the nodes left
+behind, so when trying to walk an Eulerian path it is important not to
+remove bridges if there are still edges to walk. This is basically
+Fleury's algorithm, it says that you should never choose a bridge if
+there is a choice, this is summarized in Table~\ref{table:fleury}.
 
-
+\begin{table}
+\begin{itemize}
+\item As you traverse each edge remove it.
+\item If a node has an edge that isn't a bridge take that.
+\end{itemize}
+\caption{Fleury's algorithm \label{table:fleury}}
+\end{table}
+  
 \begin{figure}
 \begin{center}
 \begin{tikzpicture}
@@ -190,6 +197,50 @@ bridge if there is a choice.
 \caption{The two dashed edges are bridges since deleting either of them would make the graph disconnected. \label{fig:bridges}}
 \end{figure}
 
+\subsubsection*{Dijkstra's algorithm}
+
+The problem Dijkstra's algorithm solves is how to find the shortest path through a weighted graph. Consider the graph in Fig
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+\node[draw,circle](a){$a$};
+\node[draw,circle, below      =2cm of a](c){$c$};
+\node[draw,circle, left = 2cm of a](d){$d$};
+\node[draw,circle, below = 2 cm of d](b){$b$};
+\node[draw,circle, below left = 2 cm of b](e){$e$};
+\path (a) edge node[above]{10} (b);
+\path (a) edge node[right]{4} (c);
+\path (b) edge node[left]{3} (d);
+\path (a) edge node[above]{11} (d);
+\path (b) edge node[above]{2} (c);
+\path (b) edge node[above]{8} (e);
+\path (d) edge node[left]{1} (e);
+\path (c) edge node[above]{8} (e);
+\end{tikzpicture}
+\end{center}
+\end{figure}
+
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+\node[draw,circle](a){$a$};
+\node[draw,circle, below      =2cm of a](c){$c$};
+\node[draw,circle, left = 2cm of a](d){$d$};
+\node[draw,circle, below = 2 cm of d](b){$b$};
+\node[draw,circle, below left = 2 cm of b](e){$e$};
+\path (a) edge node[above]{10} (b);
+\draw[double, double distance between line centers=0.5em] (a) -- node[right]{4} (c);
+\path (b) edge[thick] node[left]{3} (d);
+\path (a) edge node[above]{11} (d);
+\path (b) edge[thick] node[above]{2} (c);
+\path (b) edge node[above]{8} (e);
+\path (d) edge[thick] node[left]{1} (e);
+\path (c) edge node[above]{8} (e);
+\end{tikzpicture}
+\end{center}
+\end{figure}
 
 
 
