@@ -1,6 +1,6 @@
-%11_binary_tree.tex
+%14_binary_tree.tex
 %notes for the course PandA1 COMS10002 taught at the University of Bristol
-%2015 Conor Houghton conor.houghton@bristol.ac.uk
+%2017 Conor Houghton conor.houghton@bristol.ac.uk
 
 %To the extent possible under law, the author has dedicated all copyright 
 %and related and neighboring rights to these notes to the public domain 
@@ -14,7 +14,7 @@
 \usepackage{tikz-qtree}
 \lstset{language=C}
 \pagestyle{headings}
-\markright{COMS10002 - PandA1 11\_binary\_tree - Conor}
+\markright{COMS10001 - PandA2 14\_binary\_tree - Conor}
 
 \tikzset{every tree node/.style={minimum width=2em,draw,circle},
          blank/.style={draw=none},
@@ -24,8 +24,7 @@
 
 \begin{document}
 
-\subsection*{11 - binary trees}
-
+\subsection*{14 - binary trees\footnote{\texttt{http://github.com/conorhoughton/COMS10001}}}
 
 A binary tree is a data structure somewhat similar to a linked list
 except each node leads on to up to two other node, rather than just
@@ -203,7 +202,7 @@ levels, and hence the number of algorithmic steps goes like $\log{n}$.
 ]
 \end{tikzpicture}
 \end{center}
-\caption{A route map. Here the nodes are labelled in a way that describes there position, starting with the root a 0 indicates a left turn and a 1 a right turn.\label{fig_tree_route}}
+\caption{A route map. Here the nodes are labelled in a way that describes their position, starting with the root a 0 indicates a left turn and a 1 a right turn.\label{fig_tree_route}}
 \end{figure}
 
 Of course, all this depends on the tree being balanced. This is an
