@@ -97,8 +97,10 @@ visiting the edges $c_0d_0b_0c_0$.
 Playing with this example shows that the problem is with creating
 \lq{}islands\rq{}, a node, or group of nodes, you can't return to
 because all the links to them have been used up. At this point it is
-useful to define a \textsl{bridge}, a bridge is an edge which, if it
-was removed, would leave the graph disconnected; examples are given in
+useful to define a \textsl{connected} graph and a \textsl{bridge}. A
+graph is connected if, for every pair of nodes $a$ and $b$ there is a
+trail from $a$ to $b$. Now, a bridge is an edge which, if it was
+removed, would leave the graph disconnected; examples are given in
 Fig.~\ref{fig:bridges}. Now imagine removing the edges as you traverse
 them, if you remove a bridge then you cannot return to the nodes left
 behind, so when trying to walk an Eulerian path it is important not to
@@ -458,9 +460,9 @@ $\begin{array}{lclc}
   node; $x$ is used if there is no previous node, and $a$ is given $a$ as the previous node because it is the start of the path. Running backwards along the nodes we see the shortest path is $edbca$. \label{fig:path}}
 \end{figure}
 
-It is perhaps worth noting that Dijkstra's algorithm does not use the
-identity of the target node, starting with the starting node it
-spreads knowlege of the shortest path outwards through the graph and
+It is interesting that Dijkstra's algorithm does not use the identity
+of the target node. Starting with the starting node it spreads
+knowlege of the shortest path outwards through the graph and
 terminates when the target node is the available node with the
 shortest assigned distance.
 
