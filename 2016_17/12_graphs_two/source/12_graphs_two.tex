@@ -199,7 +199,19 @@ there is a choice, this is summarized in Table~\ref{table:fleury}.
 
 \subsubsection*{Dijkstra's algorithm}
 
-The problem Dijkstra's algorithm solves is how to find the shortest path through a weighted graph. Consider the graph in Fig
+The problem Dijkstra's algorithm solves is how to find the shortest
+path through a weighted graph. Consider the graph in
+Fig.~\ref{fig:weighted}; Dijsktra's algorithm solves, for example, the
+problem of how to go from ($a$) to ($e$) by the shortest route. The
+actual shortest route is given in Fig.~\ref{fig:shortest}. Now if you
+start at ($a$) you can work out directly the distance using one edge
+to all the nodes adjacent to $(a)$, this is given in
+Fig.~\ref{fig:near_a}. Now the distance of ten to ($b$) is not the
+actual shortest distance, there is a shorter path that goes by way of
+($c$), the node marked four; this would give a distance of six. Hence,
+we should now chose ($c$) and update the distances to the other nodes,
+if going by way of ($c$) is shorter then this new distance should
+replace the old one.
 
 \begin{figure}
 \begin{center}
@@ -219,6 +231,7 @@ The problem Dijkstra's algorithm solves is how to find the shortest path through
 \path (c) edge node[above]{8} (e);
 \end{tikzpicture}
 \end{center}
+\caption{A weighted graph \label{fig:weighted}}
 \end{figure}
 
 
@@ -231,15 +244,60 @@ The problem Dijkstra's algorithm solves is how to find the shortest path through
 \node[draw,circle, below = 2 cm of d](b){$b$};
 \node[draw,circle, below left = 2 cm of b](e){$e$};
 \path (a) edge node[above]{10} (b);
-\draw[double, double distance between line centers=0.5em] (a) -- node[right]{4} (c);
-\path (b) edge[thick] node[left]{3} (d);
+\draw[double, double distance between line centers=0.25em] (a) -- node[right]{4} (c);
+\path (b) edge[double, double distance between line centers=0.25em] node[left]{3} (d);
 \path (a) edge node[above]{11} (d);
-\path (b) edge[thick] node[above]{2} (c);
+\path (b) edge[double, double distance between line centers=0.25em] node[above]{2} (c);
 \path (b) edge node[above]{8} (e);
-\path (d) edge[thick] node[left]{1} (e);
+\path (d) edge[double, double distance between line centers=0.25em] node[left]{1} (e);
 \path (c) edge node[above]{8} (e);
 \end{tikzpicture}
 \end{center}
+\caption{Shortest path: the double lines mark the shortest path \label{fig:shortest}}
+\end{figure}
+
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+\node[draw,thick,circle](a){$a$};
+\node[draw,circle, below      =2cm of a](c){$4$};
+\node[draw,circle, left = 2cm of a](d){$11$};
+\node[draw,circle, below = 2 cm of d](b){$10$};
+\node[draw,fill,circle, below left = 2 cm of b](e){};
+\path (a) edge node[above]{10} (b);
+\path (a) edge node[right]{4} (c);
+\path (b) edge node[left]{3} (d);
+\path (a) edge node[above]{11} (d);
+\path (b) edge node[above]{2} (c);
+\path (b) edge node[above]{8} (e);
+\path (d) edge node[left]{1} (e);
+\path (c) edge node[above]{8} (e);
+\end{tikzpicture}
+\end{center}
+\caption{This shows the distance to the nodes adjacent to ($a$) directly along one edge, the non-adjacent nodes are filled in \label{fig:near_a}}
+\end{figure}
+
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+\node[draw,thick,circle](a){$a$};
+\node[draw,circle, below      =2cm of a](c){$4$};
+\node[draw,circle, left = 2cm of a](d){$11$};
+\node[draw,circle, below = 2 cm of d](b){$10$};
+\node[draw,fill,circle, below left = 2 cm of b](e){};
+\path (a) edge node[above]{10} (b);
+\path (a) edge node[right]{4} (c);
+\path (b) edge node[left]{3} (d);
+\path (a) edge node[above]{11} (d);
+\path (b) edge node[above]{2} (c);
+\path (b) edge node[above]{8} (e);
+\path (d) edge node[left]{1} (e);
+\path (c) edge node[above]{8} (e);
+\end{tikzpicture}
+\end{center}
+\caption{This shows the distance to the nodes adjacent to ($a$) directly along one edge, the non-adjacent nodes are filled in \label{fig:near_a}}
 \end{figure}
 
 
