@@ -108,8 +108,9 @@ there is a choice, this is summarized in Table~\ref{table:fleury}.
 
 \begin{table}
 \begin{itemize}
-\item As you traverse each edge remove it.
 \item If a node has an edge that isn't a bridge take that.
+\item As you traverse each edge remove it.
+\item If you remove the last edge at a node, remove the node.
 \end{itemize}
 \caption{Fleury's algorithm \label{table:fleury}}
 \end{table}
@@ -203,15 +204,7 @@ The problem Dijkstra's algorithm solves is how to find the shortest
 path through a weighted graph. Consider the graph in
 Fig.~\ref{fig:weighted}; Dijsktra's algorithm solves, for example, the
 problem of how to go from ($a$) to ($e$) by the shortest route. The
-actual shortest route is given in Fig.~\ref{fig:shortest}. Now if you
-start at ($a$) you can work out directly the distance using one edge
-to all the nodes adjacent to $(a)$, this is given in
-Fig.~\ref{fig:near_a}. Now the distance of ten to ($b$) is not the
-actual shortest distance, there is a shorter path that goes by way of
-($c$), the node marked four; this would give a distance of six. Hence,
-we should now chose ($c$) and update the distances to the other nodes,
-if going by way of ($c$) is shorter then this new distance should
-replace the old one.
+actual shortest route is given in Fig.~\ref{fig:shortest}.
 
 \begin{figure}
 \begin{center}
@@ -256,50 +249,219 @@ replace the old one.
 \caption{Shortest path: the double lines mark the shortest path \label{fig:shortest}}
 \end{figure}
 
+Now if you start at ($a$) you can work out directly the distance using
+one edge to all the nodes adjacent to $a$, this is given in
+Fig.~\ref{fig:near_a}. Let's attribute a distance of $D(x)$ to a node
+$x$ and call the length of the edge between nodes $x$ and $y$
+$D(x,y)$. Thus, after looking at the nodes adjacent to $a$, we have
+$D(b)=10$, that is the distance ten is attributed to ($b$). This is
+not the actual shortest distance from $a$ to $b$, there is a shorter
+path that goes by way of $c$ which would give a distance of six. Thus,
+the next step is to select another node, let's call it $x$ and
+update the distances to its neighbours, so, for example, if $y$ is a neighbour of $x$ and $D(x)+D(x,y)<D(y)$ then $D(y)$ should be updated to this new, shorted, distance, $D(y)\rightarrow D(x)+D(x,y)$.
+
+Now, this process might reduce some distances, but will never reduce
+the distance to the node with the lowest $D(x)$; thus, if we choose
+$x$ to be this lowest distance node, after we update all its connected
+nodes, we can cross it off and not look at it again. In the case of
+the graph we have been looking at, the lowest node in
+Fig.~\ref{fig:near_a} is $c$, so the next step is to look at its
+neighbours, $a$ has already been crossed off, so $D(b)$ is updated to
+six and $D(e)$ to 12. This situation is shown in
+Fig.~\ref{fig:after_c}. At this point $b$ has the smallest assigned
+distance, so it is considered next, since $D(b)+D(b,e)=14>12$, $D(e)$
+isn't changed, but $D(d)$ is set to nine. This is shown in
+Fig.~\ref{fig:final_moves}\textbf{A}. Now the smallest node is $d$, updating
+its neighbours reduces the distance to $e$ to 10, see
+Fig.~\ref{fig:final_moves}\textbf{B}. Since $e$ is now the unchecked node
+with the smallest distance we are done.
+
+
 
 \begin{figure}
 \begin{center}
 \begin{tikzpicture}
-\node[draw,thick,circle](a){$a$};
-\node[draw,circle, below      =2cm of a](c){$4$};
-\node[draw,circle, left = 2cm of a](d){$11$};
-\node[draw,circle, below = 2 cm of d](b){$10$};
-\node[draw,fill,circle, below left = 2 cm of b](e){};
-\path (a) edge node[above]{10} (b);
-\path (a) edge node[right]{4} (c);
-\path (b) edge node[left]{3} (d);
-\path (a) edge node[above]{11} (d);
-\path (b) edge node[above]{2} (c);
-\path (b) edge node[above]{8} (e);
-\path (d) edge node[left]{1} (e);
-\path (c) edge node[above]{8} (e);
+[cross/.style={path picture={ \draw[black] (path picture bounding
+      box.south east) -- (path picture bounding box.north west) (path
+      picture bounding box.south west) -- (path picture bounding
+      box.north east); }}] \node[draw,thick,circle,cross,label=above
+  right:$a$](a){$0$}; \node[draw,circle, below =2cm of a,label=above
+  right:$c$](c){$4$}; \node[draw,circle, left = 2cm of a,label=above
+  left:$d$](d){$11$}; \node[draw,circle, below = 2 cm of d,label=above
+  left:$b$](b){$10$}; \node[draw,circle, below left = 2 cm of
+  b,label=above left:$e$](e){$\infty$}; \path (a) edge node[above]{10}
+(b); \path (a) edge node[right]{4} (c); \path (b) edge node[left]{3}
+(d); \path (a) edge node[above]{11} (d); \path (b) edge node[above]{2}
+(c); \path (b) edge node[above]{8} (e); \path (d) edge node[left]{1}
+(e); \path (c) edge node[above]{8} (e);
 \end{tikzpicture}
 \end{center}
-\caption{This shows the distance to the nodes adjacent to ($a$) directly along one edge, the non-adjacent nodes are filled in \label{fig:near_a}}
+\caption{This shows the distance to the nodes adjacent to ($a$)
+  directly along one edge, the node labels have been moved outside the
+  nodes so that the distances can be written inside. The distance to
+  ($e$) has been marked as $\infty$ because we haven't found a route
+  to ($e$) yet. $(a)$ has a cross in it since we have already looked
+  at its nearest neighbours. \label{fig:near_a}}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+[cross/.style={path picture={ \draw[black] (path picture bounding
+      box.south east) -- (path picture bounding box.north west) (path
+      picture bounding box.south west) -- (path picture bounding
+      box.north east); }}] 
+\node[draw,circle,cross,label=above  right:$a$](a){$0$}; 
+\node[draw,thick,cross,circle, below =2cm of a,label=above  right:$c$](c){$4$}; 
+\node[draw,circle, left = 2cm of a,label=above  left:$d$](d){$11$}; 
+\node[draw,circle, below = 2 cm of d,label=above left:$b$](b){$6$}; 
+\node[draw,circle, below left = 2 cm of b,label=above left:$e$](e){$12$}; 
+\path (a) edge node[above]{10}
+(b); \path (a) edge node[right]{4} (c); \path (b) edge node[left]{3}
+(d); \path (a) edge node[above]{11} (d); \path (b) edge node[above]{2}
+(c); \path (b) edge node[above]{8} (e); \path (d) edge node[left]{1}
+(e); \path (c) edge node[above]{8} (e);
+\end{tikzpicture}
+\end{center}
+\caption{This shows the situation after $c$'s neighbours have been considered. \label{fig:after_c}}
 \end{figure}
 
 
 \begin{figure}
 \begin{center}
+$\begin{array}{lclc}
+\bf{A}&&\bf{B}&\\
+&
 \begin{tikzpicture}
-\node[draw,thick,circle](a){$a$};
-\node[draw,circle, below      =2cm of a](c){$4$};
-\node[draw,circle, left = 2cm of a](d){$11$};
-\node[draw,circle, below = 2 cm of d](b){$10$};
-\node[draw,fill,circle, below left = 2 cm of b](e){};
-\path (a) edge node[above]{10} (b);
-\path (a) edge node[right]{4} (c);
-\path (b) edge node[left]{3} (d);
-\path (a) edge node[above]{11} (d);
-\path (b) edge node[above]{2} (c);
-\path (b) edge node[above]{8} (e);
-\path (d) edge node[left]{1} (e);
-\path (c) edge node[above]{8} (e);
+[cross/.style={path picture={ \draw[black] (path picture bounding
+      box.south east) -- (path picture bounding box.north west) (path
+      picture bounding box.south west) -- (path picture bounding
+      box.north east); }}] 
+\node[draw,circle,cross,label=above  right:$a$](a){$0$}; 
+\node[draw,cross,circle, below =2cm of a,label=above  right:$c$](c){$4$}; 
+\node[draw,circle, left = 2cm of a,label=above  left:$d$](d){$9$}; 
+\node[draw,thick,cross,circle, below = 2 cm of d,label=above left:$b$](b){$6$}; 
+\node[draw,circle, below left = 2 cm of b,label=above left:$e$](e){$12$}; 
+\path (a) edge node[above]{10}
+(b); \path (a) edge node[right]{4} (c); \path (b) edge node[left]{3}
+(d); \path (a) edge node[above]{11} (d); \path (b) edge node[above]{2}
+(c); \path (b) edge node[above]{8} (e); \path (d) edge node[left]{1}
+(e); \path (c) edge node[above]{8} (e);
 \end{tikzpicture}
+&&
+\begin{tikzpicture}
+[cross/.style={path picture={ \draw[black] (path picture bounding
+      box.south east) -- (path picture bounding box.north west) (path
+      picture bounding box.south west) -- (path picture bounding
+      box.north east); }}] 
+\node[draw,circle,cross,label=above  right:$a$](a){$0$}; 
+\node[draw,cross,circle, below =2cm of a,label=above  right:$c$](c){$4$}; 
+\node[draw,circle,thick,cross, left = 2cm of a,label=above  left:$d$](d){$9$}; 
+\node[draw,circle, cross,below = 2 cm of d,label=above left:$b$](b){$6$}; 
+\node[draw,circle, below left = 2 cm of b,label=above left:$e$](e){$10$}; 
+\path (a) edge node[above]{10}
+(b); \path (a) edge node[right]{4} (c); \path (b) edge node[left]{3}
+(d); \path (a) edge node[above]{11} (d); \path (b) edge node[above]{2}
+(c); \path (b) edge node[above]{8} (e); \path (d) edge node[left]{1}
+(e); \path (c) edge node[above]{8} (e);
+\end{tikzpicture}
+\end{array}$
 \end{center}
-\caption{This shows the distance to the nodes adjacent to ($a$) directly along one edge, the non-adjacent nodes are filled in \label{fig:near_a}}
+\caption{This shows the situation after (\textbf{A}) $b$'s and
+  (\textbf{B}) $d$'s neighbours have been considered. At this point
+  $e$, the target node, is the available node with the lowest assigned
+  distance, so the algorithm is done and the shortest path is
+  ten. \label{fig:final_moves}}
 \end{figure}
 
+It would have been easy to keep track during the algorithm of the node
+preceding a given node in the shortest path; this would allow the path to be retraced afterwards. This is shown in Fig.~\ref{fig:path}.
 
+
+\begin{figure}
+\begin{center}
+
+$\begin{array}{lclc}
+\bf{A}&&\bf{B}&\\
+&
+\begin{tikzpicture}
+[cross/.style={path picture={ \draw[black] (path picture bounding
+      box.south east) -- (path picture bounding box.north west) (path
+      picture bounding box.south west) -- (path picture bounding
+      box.north east); }}] \node[draw,thick,circle,cross,label=above
+  right:$a$](a){$0:a$}; \node[draw,circle, below =2cm of a,label=above
+  right:$c$](c){$4:a$}; \node[draw,circle, left = 2cm of a,label=above
+  left:$d$](d){$11:a$}; \node[draw,circle, below = 2 cm of d,label=above
+  left:$b$](b){$10:a$}; \node[draw,circle, below left = 2 cm of
+  b,label=above left:$e$](e){$\infty:x$}; \path (a) edge node[above]{10}
+(b); \path (a) edge node[right]{4} (c); \path (b) edge node[left]{3}
+(d); \path (a) edge node[above]{11} (d); \path (b) edge node[above]{2}
+(c); \path (b) edge node[above]{8} (e); \path (d) edge node[left]{1}
+(e); \path (c) edge node[above]{8} (e);
+\end{tikzpicture}
+&&
+\begin{tikzpicture}
+[cross/.style={path picture={ \draw[black] (path picture bounding
+      box.south east) -- (path picture bounding box.north west) (path
+      picture bounding box.south west) -- (path picture bounding
+      box.north east); }}] 
+\node[draw,circle,cross,label=above  right:$a$](a){$0:a$}; 
+\node[draw,thick,cross,circle, below =2cm of a,label=above  right:$c$](c){$4:a$}; 
+\node[draw,circle, left = 2cm of a,label=above  left:$d$](d){$11:a$}; 
+\node[draw,circle, below = 2 cm of d,label=above left:$b$](b){$6:c$}; 
+\node[draw,circle, below left = 2 cm of b,label=above left:$e$](e){$12:c$}; 
+\path (a) edge node[above]{10}
+(b); \path (a) edge node[right]{4} (c); \path (b) edge node[left]{3}
+(d); \path (a) edge node[above]{11} (d); \path (b) edge node[above]{2}
+(c); \path (b) edge node[above]{8} (e); \path (d) edge node[left]{1}
+(e); \path (c) edge node[above]{8} (e);
+\end{tikzpicture}\\
+\bf{C}&&\bf{D}&\\
+&
+\begin{tikzpicture}
+[cross/.style={path picture={ \draw[black] (path picture bounding
+      box.south east) -- (path picture bounding box.north west) (path
+      picture bounding box.south west) -- (path picture bounding
+      box.north east); }}] 
+\node[draw,circle,cross,label=above  right:$a$](a){$0:a$}; 
+\node[draw,cross,circle, below =2cm of a,label=above  right:$c$](c){$4:a$}; 
+\node[draw,circle, left = 2cm of a,label=above  left:$d$](d){$9:b$}; 
+\node[draw,thick,cross,circle, below = 2 cm of d,label=above left:$b$](b){$6:c$}; 
+\node[draw,circle, below left = 2 cm of b,label=above left:$e$](e){$12:c$}; 
+\path (a) edge node[above]{10}
+(b); \path (a) edge node[right]{4} (c); \path (b) edge node[left]{3}
+(d); \path (a) edge node[above]{11} (d); \path (b) edge node[above]{2}
+(c); \path (b) edge node[above]{8} (e); \path (d) edge node[left]{1}
+(e); \path (c) edge node[above]{8} (e);
+\end{tikzpicture}
+&&
+\begin{tikzpicture}
+[cross/.style={path picture={ \draw[black] (path picture bounding
+      box.south east) -- (path picture bounding box.north west) (path
+      picture bounding box.south west) -- (path picture bounding
+      box.north east); }}] 
+\node[draw,circle,cross,label=above  right:$a$](a){$0:a$}; 
+\node[draw,cross,circle, below =2cm of a,label=above  right:$c$](c){$4:a$}; 
+\node[draw,circle,thick,cross, left = 2cm of a,label=above  left:$d$](d){$9:b$}; 
+\node[draw,circle, cross,below = 2 cm of d,label=above left:$b$](b){$6:c$}; 
+\node[draw,circle, below left = 2 cm of b,label=above left:$e$](e){$10:d$}; 
+\path (a) edge node[above]{10}
+(b); \path (a) edge node[right]{4} (c); \path (b) edge node[left]{3}
+(d); \path (a) edge node[above]{11} (d); \path (b) edge node[above]{2}
+(c); \path (b) edge node[above]{8} (e); \path (d) edge node[left]{1}
+(e); \path (c) edge node[above]{8} (e);
+\end{tikzpicture}
+\end{array}$
+\end{center}
+\caption{Here along with the assigned distance the previous node is
+  tracked, if the assigned distance is updated, so is the previous
+  node; $x$ is used if there is no previous node, and $a$ is given $a$ as the previous node because it is the start of the path. Running backwards along the nodes we see the shortest path is $edbca$. \label{fig:path}}
+\end{figure}
+
+It is perhaps worth noting that Dijkstra's algorithm does not use the
+identity of the target node, starting with the starting node it
+spreads knowlege of the shortest path outwards through the graph and
+terminates when the target node is the available node with the
+shortest assigned distance.
 
 \end{document}
