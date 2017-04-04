@@ -14,11 +14,13 @@
 \lstset{language=C}
 \pagestyle{headings}
 \markright{COMS10001 - PandA2 13\_linked\_lists - Conor}
+\newcommand{\pter}{-$>$}
+
 \begin{document}
 
 \subsection*{13 - linked lists\footnote{\texttt{http://github.com/conorhoughton/COMS10001}}}
 
-A data structures is a way of organizing and storing information on a
+A data structure is a way of organizing and storing information on a
 computer. Modern computer languages often have a selection of in-built
 data structures, usually as a library. Here we will look at some of
 the most common structures and implement them, by hand, in c. We will
@@ -46,7 +48,7 @@ a&b&c&d&e&f&g&h
 Often, in fact, you don't need to access elements by index; you might
 just need to go through them one-by-one in order but want to be able
 to add extra elements in different locations. For this you can use a
-linked list, which will be describe below: accessing a specified
+linked list, which will be described below: accessing a specified
 element is an $O(n)$ operation, but accessing each element one-by-one
 in turn, is also $O(n)$ and adding an extra element is $O(1)$.
 
@@ -67,7 +69,7 @@ would look like
 \end{equation}
 where the last node points to nothing, here illustrated with a
 $\times$ and, in practice in c it is implemented as a NULL pointer. Now,
-assuming the location of the first node, often called the {\sl head},
+assuming the location of the first node, often called the \textsl{head},
 is known, it can be accessed to find its entry, 3, and the location of
 the next entry, indicated here by the arrow, this in turn can be
 accessed to give the entry, 1, and the location of the next node. This
@@ -103,13 +105,13 @@ struct node * make_head(int new_entry)
 \end{table}
 
 
-A struct for a node in a linked list is give in
+A struct for a node in a linked list is given in
 Table~\ref{c_node}. When making a linked list you need first of all a
 head, a node whose address you know. There is a function for making
-the head at Table~\ref{c_head}. Now, after that the locations of the
+the head in Table~\ref{c_head}. Now, after that the locations of the
 subsequent nodes are the business of the linked list, the person using
 the linked list only has to know the location of head, the location of
-the other nodes is stored in the nodes themselves. 
+the other nodes is stored in the nodes themselves.
 
 
 \begin{table}
@@ -152,7 +154,7 @@ struct node * locate(struct node * iterator, int target)
 
 Now, to iterate through the list is simply a matter of moving along
 it. In Table~\ref{c_print} there is a function for printing out all
-the element. It starts at the head and then goes to head-$>$next and
+the elements. It starts at the head and then goes to head-$>$next and
 keeps going until head-$>$next==NULL. Another iterator is given in
 Table~\ref{c_locate}, this locates an entry and returns a pointer to
 its node.
@@ -167,9 +169,13 @@ void add_node(struct node * here, int new_entry)
   here->next->next=here_next;
 }
 \end{lstlisting}
-\caption{Add a node after here. here\_next stores the location of here-$>$next, the new node is added at here-$>$next and this new nodes next is set to here\_next.\label{c_add}}
+\caption{Add a node after
+  \textbf{here}. \textbf{here\_next} stores the
+  location of \textbf{here\pter next}, the new node is added at
+  \textbf{here\pter next} and this new node's \textbf{next}, what is now
+  \textbf{here\pter next\pter next}, is set to
+  \textbf{here\_next}.\label{c_add}}
 \end{table}
-
 
 \begin{table}
 \begin{lstlisting}[numbers=left]
