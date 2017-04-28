@@ -93,8 +93,16 @@ void set_polated_point(Point* centroid,Point* worst,double(*fxn)(),double lambda
   
   int i;
 
+  fflush(stdout);
+
   for(i=0;i<DIM;i++)
-    pol_position[i]=(centroid->x)[i]+lambda*((centroid->x)[i]-(worst->x)[i]);
+    {
+
+      pol_position[i]=(centroid->x)[i]+lambda*((centroid->x)[i]-(worst->x)[i]);
+    }
+  fflush(stdout);
+
+
   
   for(i=0;i<DIM;i++)
     (pol_point->x)[i]=pol_position[i];

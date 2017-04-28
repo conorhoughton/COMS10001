@@ -63,7 +63,7 @@ int main()
 {
   double (*fxn)();
   fxn=hyper_ellipsoid;
-  //  fxn=rosenbrock;
+  // fxn=rosenbrock;
   //  fxn=goldstein_price;
 
   Point* points[DIM];
@@ -72,6 +72,10 @@ int main()
   double epsilon=0.5;
   double scale=2.0;
   make_points(x,epsilon,fxn,points);
+
+  int j=0;
+  for(j=0;j<=DIM;j++)
+    print_point(points[j]);
 
   int step_c,step_n=450;
 
@@ -107,6 +111,7 @@ int main()
 
       best_and_worst(points,&best,&worst,&second_worst);
       best_value=points[best]->value;
+
       worst_value=points[worst]->value;
       second_worst_value=points[second_worst]->value;
 
@@ -149,6 +154,7 @@ int main()
 	    }
 	  
 	}
+
 
       int i;
       for(i=0;i<2;i++)

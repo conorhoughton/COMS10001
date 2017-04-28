@@ -38,7 +38,9 @@ used in anger it would normally until some convergence criterion was
 made, for example, if the vertices of the simplex, and the reflected
 point, all had function values within some tolerance of each other.
 
-to compile gcc going_down_triangles.c
+to compile 
+
+gcc going_down_triangles.c -lm
 
 Then run and 
 
