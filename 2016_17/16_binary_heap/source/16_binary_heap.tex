@@ -1,0 +1,73 @@
+%16_binary_heap.tex
+%notes for the course PandA1 COMS10002 taught at the University of Bristol
+%2017 Conor Houghton conor.houghton@bristol.ac.uk
+
+%To the extent possible under law, the author has dedicated all copyright 
+%and related and neighboring rights to these notes to the public domain 
+%worldwide. These notes are distributed without any warranty. 
+
+\documentclass[11pt,a4paper]{scrartcl}
+\typearea{12}
+\usepackage{graphicx}
+\usepackage{pstricks}
+\usepackage{listings}
+\usepackage{tikz-qtree}
+\lstset{language=C}
+\pagestyle{headings}
+\markright{COMS10001 - PandA2 16\_binary\_heap - Conor}
+
+\begin{document}
+\tikzset{every tree node/.style={minimum width=2em,draw,circle},
+         blank/.style={draw=none},
+         edge from parent/.style=
+         {draw,->, edge from parent path={(\tikzparentnode) -- (\tikzchildnode)}},
+         level distance=1.5cm}
+
+\subsection*{16 - binary heap DRAFT}
+
+A binary heap is a data structure which allows elements to be easily
+added and removed while keeping track of the largest element. They are
+important because they are used to implement priority queues in
+scheduling, for example, in a router. We have also seen another
+potential application, in Dijskra's algorithm the lowest distance node
+is always evaluated next and a binary heap could be used to track
+which node is the lowest. Here, for definiteness, we will consider a
+tree designed to keep track of the highest node, rather than the
+lowest as in the the Dijstra example, but, of course, this isn't a
+significant difference.
+
+A binary heap is a complete binary tree; since it is a binary tree all
+the nodes have up to two child nodes, a complete tree is one where all
+the layers except the lowest layer are full. A binary heap also the
+heap property which states that every node is smaller than, or equal
+to, its parent.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+   \begin{center}
+\begin{tikzpicture}
+\Tree [.50 [.20 \edge[]; {10} \edge[]; {25} ] [.70 \edge[blank];
+    \node[blank]{}; \edge[]; [.80 \edge[]; {75} \edge[]; {95} ] ] ]
+\end{tikzpicture}
+\end{center}
+\caption{An example binary tree for looking at heights. The node 50
+  has height four, the distance down to 75 and 95. The node 20 has
+  height two and the node 70 has height
+  three.\label{fig_example_tree}}
+\end{figure}
+
+
+\end{document}
