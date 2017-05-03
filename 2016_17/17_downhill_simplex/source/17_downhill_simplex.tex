@@ -1,4 +1,4 @@
-%13_downhill_simplex.tex
+%17_downhill_simplex.tex
 %notes for the course PandA2 COMS10001 taught at the University of Bristol
 %2016 Conor Houghton conor.houghton@bristol.ac.uk
 
@@ -40,7 +40,7 @@ function, $E$ that depends on lots of parameters, so $E(\mathbf{x})$ where
 \end{equation}
 $E$ is often called an objective function and the idea is to find the values of $\mathbf{x}$ that minimize $E$.
 
-This situation applies in a diversity of situations. In physics $E$
+This problem occurs in a diversity of situations. In physics $E$
 might be an energy function related to the configuration of a
 mechanical system with $\mathbf{x}$ representing the positions of the
 components, or, for a particle physicist, a configuration of fields
@@ -67,7 +67,7 @@ global minimum. This isn't a problem we are going to discuss here.
 
 \subsubsection*{Some optimization algorithms}
 
-Obviously we know the functional form of $E$ we can find its minimum
+Obviously, if we know the functional form of $E$ we can find its minimum
 using calculus. For example, say
 \begin{equation}
 E(x_1,x_2)=(1-x_1)^2+100(x_2-x_1^2)^2
@@ -81,7 +81,7 @@ optimum point by setting them to zero, so
 \end{aligned}
 \end{equation}
 which is solved by $x_1=x_2=1$. However, this isn't the sort of
-problem we are thinking about here, we are envisaging situations were
+problem we are thinking about here, we are envisaging situations where
 $E$ cannot be treated analytically like this, so, for example, $E$
 itself must be calculated numerically for a given value of
 $\mathbf{x}$.
@@ -90,8 +90,8 @@ Another approach might be to divide the space of $\mathbf{x}$ values
 up into a grid and to check them all; this is known as grid-search and
 is sometimes the best method for problems where $\mathbf{x}$ has only
 a small number of dimensions and $E$ is very quick to
-calculated. However, $E$ might be slow to calculated, for example, in
-neuroscience examples, the model might take a quite a while to
+calculate. However, $E$ might be slow to calculate, for example, in
+neuroscience examples, the model might take quite a while to
 run. Furthermore, the number of grid points may be very large,
 particularly if the variability of $E$ means the grid has to be fine,
 or if the number of dimensions is not small. Often grid search is
@@ -111,8 +111,8 @@ worked out using calculus, and even in situations where $E$ has to be
 calculated numerically it may be possible to find a similar numerical
 scheme to calculate the gradient. This is often the case for error
 functions in machine learning, for example. However, it is not always
-the case that the gradient can be easily estimated; in examples coming
-for neuroscience, for example, the models are highly non-linear and
+the case that the gradient can be easily estimated; in problems coming
+from neuroscience, for example, the models are highly non-linear and
 there is no easy way to find the gradient.
 
 Even if the gradient is known, gradient descent methods can be
@@ -139,7 +139,7 @@ to find the optimum in terms of run time or the number of function
 evaluations, but it is often a method that works without having to
 learn too much about the properties of the objective function; in
 other words, it is often the quickest way to solve the problem if you
-include the researchers time along with the time it takes to run. It
+include the researchers' time along with the time it takes to run. It
 also does not require gradient information.
 
 \begin{figure}
@@ -157,19 +157,19 @@ at (2.5,4.33); \node[draw=red](x1n) at (x1) {$x_1$};
   this is just a triangle. A simplex is not regular in general but in
   many of these figures they are shown as regular to make things look
   clearer. In the description of the downhill simplex algorithm the
-  vertices is ordered so $E(\mathbf{x}_1)\le E(\mathbf{x}_2)\le \ldots
+  vertices are ordered so $E(\mathbf{x}_1)\le E(\mathbf{x}_2)\le \ldots
   E(\mathbf{x}_{n+1})$.\label{fig:simplex}}
 \end{figure}
 
 A simplex is a generalization of a triangle, just as a triangle is
 defined in two-dimensional space and has three vertices and a
-tetrahedron is defined in three-dimensional space and have four
+tetrahedron is defined in three-dimensional space and has four
 vertices, a $n$-dimensional simplex has $(n+1)$-vertices. Here we will
-be considering simplices in the space of parameters values
-$\mathbf{x}$ so the vertices will be
+be considering simplices in the space of parameter values $\mathbf{x}$
+so the vertices will be
 $\{\mathbf{x}_1,\mathbf{x}_2,\ldots,\mathbf{x}_{n+1}\}$. Simplices are
 not regular in general, the distances between the vertices need not be
-the same, but there is required that it isn't flat: if you remove one
+the same, but it is required that it isn't flat: if you remove one
 vertex the remaining $n$ vertices should be linearly independent.
 
 Now the idea of downhill simplex is that a simplex kind of ooches
@@ -206,15 +206,16 @@ situation.
   of the other points.\label{fig:reflection}}
 \end{figure}
 
-For simplicity lets imagine the vertices are in order according to the
+For simplicity let's imagine the vertices are in order according to the
 objective function, so
 \begin{equation}
 E(\mathbf{x}_1)\le E(\mathbf{x}_2)\le \ldots \le E(\mathbf{x}_{n+1})
 \end{equation}
 This order is done at the start of each iteration, though obvious in
-doesn't involve renumbering, that is just done here for notational
-convenience. The idea generally is to replace $\mathbf{x}_{n+1}$. It
-is useful to define the centroid of the remaining points:
+practice this doesn't involve renumbering, that is just done here for
+notational convenience. The idea generally is to replace
+$\mathbf{x}_{n+1}$. It is useful to define the centroid of the
+remaining points:
 \begin{equation}
 \mathbf{x}_o=\frac{1}{n}\sum_{i=1}^n\mathbf{x}_i
 \end{equation}
@@ -362,7 +363,7 @@ algorithm repeats. However, practically, a stopping criterion needs to
 be devised. This usually says that the algorithm stops when the
 simplex vertices have values of the objective function that are
 extremely close to each other and are unchanging from iteration to
-iteration, where \lq{}extremely\rq{} here stands some specified
+iteration, where \lq{}extremely\rq{} here stands for some specified
 tolerance. Often a maximum number of iterations is also specified in
 case the algorithm doesn't converge.
 
@@ -487,14 +488,15 @@ case the algorithm doesn't converge.
 The downhill simplex is a simple, intuitively appealing and robust
 algorithm. It is easy to code. It is often the thing that you try to
 see if you can avoid doing something cleverer and hence
-trickier. However, there are better algorithms, the best algorithms
-like this that don't use gradient information involve choosing a
-direction and optimization the objective function in that direction,
-there are very good algorithms for minimizing functions of one
-variable and along a fixed line that is what this becomes. Another
-direction is then chosen and the one-dimensional optimization is
-repeated, and so on until the algorithm converges. The details of the
-algorithms account for how the directions are chosen.
+trickier. However, there are better algorithms, often the best
+algorithm that like this that don't use gradient information is
+Powell's method which involve choosing a direction and optimizating
+the objective function in that direction, there are very good
+algorithms for minimizing functions of one variable. Another direction
+is then chosen and the one-dimensional optimization is repeated, and
+so on until the algorithm converges. The details of the algorithms
+account for how the directions are chosen and how the one-dimensional
+optimization is performed.
 
 A big problem is what happens when there is more than one minimum: the
 local minima that act as a trap for the simplex on its way to the
@@ -503,6 +505,6 @@ lots of different initial conditions in the hope that one of them will
 reach the absolute minimum. Another method is to use something like
 simulated annealing or the genetic algorithm, these are designed to
 work well when the answer is hiding behind lots of local minima, but
-tend to be slow and finickity.
+tends to be slow and finickity.
 
 \end{document}
