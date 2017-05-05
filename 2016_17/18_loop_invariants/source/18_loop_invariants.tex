@@ -1,0 +1,121 @@
+%18_loop_invariants.tex
+%notes for the course PandA2 COMS10001 taught at the University of Bristol
+%2016 Conor Houghton conor.houghton@bristol.ac.uk
+
+%To the extent possible under law, the author has dedicated all copyright 
+%and related and neighboring rights to these notes to the public domain 
+%worldwide. These notes are distributed without any warranty. 
+
+\documentclass[11pt,a4paper]{scrartcl}
+\typearea{12}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{pstricks}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning}
+\usetikzlibrary{shapes,arrows}
+\lstset{language=C}
+\pagestyle{headings}
+\markright{COMS10001 - PandA2 13\_loop\_invariants - Conor}
+
+\begin{document}
+
+\subsection*{18 - loop invariants}
+
+Loop invariants are a tool for verify algorithms, in a sense they
+present an algorithm as a recursion in the mathematical sense and make
+it ameanable to proof. It is easiest to approach the loop invariant
+through an example, the function in Table~\ref{c_insertsort} does
+insert sort. Now consider line 14; at this point the subarray of
+\texttt{a} running from 0 to \texttt{i}, which we will call
+\texttt{a[0:i]}, contains the 0 to \texttt{i} elements of the original
+list, but sorted. This is the \textsl{loop invariant}, it is a
+statement that is true before the first loop, at the end of each
+iteration and the fact it is true at the end means the algorithm has
+achieved its goal. By checking loops for invariants we can be
+confident the loop will achieve its goal.
+
+\begin{table}
+\begin{lstlisting}[numbers=left]
+void sort(int a[],int n)
+{
+   int i,j,this_a;
+
+   for(i=1;i<n;i++){
+      this_a=a[i];
+      j=i-1;
+
+      while(j>=0&&this_a<a[j]){
+         a[j+1]=a[j];
+	 j=j-1;
+      }
+      a[j+1]=this_a;
+      //a[0 . . . i] contains the first i+1 elements, sorted
+   }
+}
+\end{lstlisting}
+\caption{Insert sort, as seen in 1\_introduction.\label{c_insertsort}}
+\end{table}
+
+Thus a loop invariant is a statement that has three properties:
+initialization, it is true at the start; maintenance, if it is true at
+the start of an iteration, it is true at the end and utility, when the
+loop terminates the loop invariant shows that the algorithm has served
+its purpose. For insertion sort the sorted list is \texttt{a[0]} at
+the start, it is trivially sorted and contains \texttt{i=0} element of
+list. If \texttt{a[0:i-1]} is sorted and contains the first $i$
+elements, then the \texttt{i} iteration adds the $i+1$ element and
+moves it down the list so that it is bigger than the element to its
+left and larger than the one to its right. This means that the new,
+larger, list is sorted, maintaining the invariant. Finally, when the
+loop terminates $i=n-1$ so the invariant tells us $a[0:n-1]$ contains
+all the elements in the origin list, sorted. Hence, this is a list
+invariant.
+
+As another example, consider binary search; A code listing is given in
+Table~\ref{c_binary_search}. In it a sorted array \texttt{a} is
+searched for a key \texttt{val}, there are two markers \texttt{low}
+and \texttt{high} and at each iteration the maker \texttt{mid} is set
+to the midpoint of \texttt{low} and \texttt{high}, if
+\texttt{a[mid]==val} it terminates, if not it exploits the fact the
+list is sorted and sets \texttt{low=mid+1} if \texttt{a[mid]} is less
+than \texttt{val} or sets \texttt{high=mid-1} otherwise. The key point
+is that it changes the markers so that is \texttt{val} is in the
+original list it is in \texttt{a[low:high]}. This gives us the loop
+invariant which is that if \texttt{val} is in the list it is in
+\texttt{a[low:high]}. This is true at the start when
+\texttt{a[low:high]} is the whole list, if it is true at the start of
+each iteration it is true at the end because the list is sorted and,
+finally, the loop terminates when it contains only one element, since, either,
+this is \texttt{val} or \texttt{val} wasn't in the list, then
+the algorithm has served its purpose.
+
+\begin{table}
+\begin{lstlisting}[numbers=left] 
+int search(int a[],int n, int val)
+{
+  int mid, low=0, high=n-1;
+
+  while(low<high){
+      mid=(low+high)/2;
+      if(a[mid]==val){
+        low=mid;
+        high=mid;
+      }
+      else if(val>a[mid])
+	low=mid+1;
+      else
+	high=mid -1;
+    }
+  if(a[high]==val)
+    return high;
+  return -1;
+}
+\end{lstlisting}
+\caption{Binary search, this is modified from 3\_search.\label{c_binary_search}}
+\end{table}
+
+
+
+\end{document}
