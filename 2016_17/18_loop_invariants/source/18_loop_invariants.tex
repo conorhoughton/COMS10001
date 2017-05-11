@@ -23,7 +23,7 @@
 
 \subsection*{18 - loop invariants}
 
-Loop invariants are a tool for verify algorithms, in a sense they
+Loop invariants are a tool for verifying algorithms, in a sense they
 present an algorithm as a recursion in the mathematical sense and make
 it ameanable to proof. It is easiest to approach the loop invariant
 through an example, the function in Table~\ref{c_insertsort} does
@@ -59,24 +59,28 @@ void sort(int a[],int n)
 \end{table}
 
 Thus a loop invariant is a statement that has three properties:
-initialization, it is true at the start; maintenance, if it is true at
-the start of an iteration, it is true at the end and utility, when the
-loop terminates the loop invariant shows that the algorithm has served
-its purpose. For insertion sort the sorted list is \texttt{a[0]} at
-the start, it is trivially sorted and contains \texttt{i=0} element of
-list. If \texttt{a[0:i-1]} is sorted and contains the first $i$
-elements, then the \texttt{i} iteration adds the $i+1$ element and
-moves it down the list so that it is bigger than the element to its
-left and larger than the one to its right. This means that the new,
-larger, list is sorted, maintaining the invariant. Finally, when the
-loop terminates $i=n-1$ so the invariant tells us $a[0:n-1]$ contains
-all the elements in the origin list, sorted. Hence, this is a list
+\begin{itemize}
+\item Initialization: it is true at the start.
+\item Maintenance: if it is true at the start of an iteration, it is
+  true at the end.
+\item Utility: when the loop terminates the loop invariant shows that
+  the algorithm has served its purpose.
+\end{itemize}
+For insertion sort the sorted list is \texttt{a[0]} at the start, it
+is trivially sorted and contains \texttt{i=0} element of list. If
+\texttt{a[0:i-1]} is sorted and contains the first $i$ elements, then
+the \texttt{i}th iteration adds the $i+1$ element and moves it down
+the list so that it is bigger than the element to its left and larger
+than the one to its right. This means that the new, larger, list is
+sorted, maintaining the invariant. Finally, when the loop terminates
+texttt{i==n-1} so the invariant tells us \texttt{a[0:n-1]} contains
+all the elements in the original list, sorted. Hence, this is a list
 invariant.
 
-As another example, consider binary search; A code listing is given in
-Table~\ref{c_binary_search}. In it a sorted array \texttt{a} is
+As another example, consider binary search; a code listing is given in
+Table~\ref{c_binary_search}. In it, a sorted array \texttt{a} is
 searched for a key \texttt{val}, there are two markers \texttt{low}
-and \texttt{high} and at each iteration the maker \texttt{mid} is set
+and \texttt{high} and at each iteration the marker \texttt{mid} is set
 to the midpoint of \texttt{low} and \texttt{high}, if
 \texttt{a[mid]==val} it terminates, if not it exploits the fact the
 list is sorted and sets \texttt{low=mid+1} if \texttt{a[mid]} is less
@@ -87,7 +91,7 @@ invariant which is that if \texttt{val} is in the list it is in
 \texttt{a[low:high]}. This is true at the start when
 \texttt{a[low:high]} is the whole list, if it is true at the start of
 each iteration it is true at the end because the list is sorted and,
-finally, the loop terminates when it contains only one element, since, either,
+finally, the loop terminates when it contains only one element, since, either
 this is \texttt{val} or \texttt{val} wasn't in the list, then
 the algorithm has served its purpose.
 
